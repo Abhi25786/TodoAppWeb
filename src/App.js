@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import { Provider } from "react-redux";
+import { userDate } from "./actions/auth";
+import Navigation from "./navigation/Navigation";
+import store from "./store/configureStore";
+import { getItem } from "./utils/utils";
 
 function App() {
+
+  useEffect(() => {
+    let userData = getItem('userData')
+      if (userData != undefined) {
+          userDate(userData);
+        }
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Provider store={store}>
+        <Navigation />
+    </Provider>
+
+  )
+
 }
 
 export default App;
